@@ -1,66 +1,134 @@
 
+ <?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <?php include './includes/head.inc.html' ?>
+    <?php include 'includes/head.inc.html' ?>
 </head>
 
 <body>
     <header>
-        <?php include './includes/header.inc.html' ?>
+        <?php include 'includes/header.inc.html';?>
     </header>
-    <div>
-        <nav class="d-inline col-6">
-            <button type="button" class="btn border-dark col-2 m-3">Home</button>
-
+    <div class="container">
+    <div class="row">
+        <nav class="col-sm-3 my-2 "> 
+            <a href="index.php" class="btn btn-outline-secondary mx-auto btn-block col-12 "> Home</a>
+            <?php
+  
+                if(!empty($_SESSION['table'])){
+                 $table = $_SESSION['table'];
+                include 'includes/ul.inc.html'; 
+                } 
+                else{} 
+            ?> 
         </nav>
-        <button type="button" class=" btn bg-primary col-2 text-light">Ajouter des données</button>
+ 
+        <section class=" col-sm-9 my-2"> 
+           
+            
+            <?php 
+                if(isset($_GET['add'])) {
+                include 'includes/form.inc.html';  
+                } 
+             
+           
 
-        <section class="  justify-content-end p-4">
-            <form>
-                <label for="prename" class="col-form-label ">Prénom</label>
-                <input type="prename" id="prenom" class="form-control" placeholder="Renseignez votre prénom">
+                elseif(isset($_POST['submit'])){
+              
+                    $_SESSION['table']=[
+                        'first_name'=>htmlspecialchars($_POST['first_name']),
+                        'last_name'=>htmlspecialchars($_POST['last_name']),
+                        'age'=>$_POST['age'],
+                        'size'=>$_POST['size'],
+                        'situation'=>$_POST['situation']
+                    ];
+                    echo "<h2 class='text-center'>Donnée sauvegardée</h2>";
+               
+                }  
+                elseif(isset($_GET['del'])){
+                    unset($_SESSION['table']);
+                    echo "<h2 class = 'text-center'>Les données ont bien été supprimées";
+                }
+                elseif(isset($_GET['debugging'])){
+                    echo "<h2>Débogage</h2> <br> <p> ===> Lecture du tableau à l'aide de la fonction print_r()";
+                    print "<pre>";
+                    print_r($table);
+                    print "</pre>"; 
+                }
 
-                <label for="name" class="col-form-label">Nom</label>
-                <input type="name" id="nom" class="form-control">
+                elseif (isset($_GET['concatenation'])) {
+                    echo "<h2>Concaténation</h2> <br> <p> ===> Construction d'une phrase avec le contenu du tableau </p>";
+                
+                    echo "
+                    <h3>".$table['first_name']." " .$table['last_name']."</h3>"
+                    ;
+                    echo "
+                    <p>" .$table['age']. " ans, je mesure " .$table['size']. "m et je fais partie des " .$table['situation']. " de la promo Simplon. </p> ";
 
-                <label for="age" class="col-form-label">Age (18 à 60ans)</label>
-                <input type="number" id="age" class="form-control">
+                    echo "<br> <p> ===> Construction d'une phrase après MAJ du tableau: </p> ";
 
-                <label for="name" class="col-form-label">Nom</label>
-                <input type="name" id="nom" class="form-control">
+                    $table['last_name']= strtoupper($table['last_name']);
+                    echo " 
+                    <h3>".$table['first_name']." " .$table['last_name']."</h3>"
+                    ;
+                    echo "
+                    <p>" .$table['age']. " ans, je mesure " .$table['size']. "m et je fais partie des " .$table['situation']. " de la promo Simplon. </p> ";
 
-                <div class="input-group pt-4 w-100">
-                    <span class="input-group-text">Taille (entre 1,6 et 2m)</span>
-                    <input type="number" aria-label="First name" class="form-control">
-                    <span class="input-group-text">M</span>
-                </div>
+                
+                    echo "<br> <p> ===> Affichage d'une virgule à la place du point pour la taille : </p> ";
+
+                    $table['size']= str_replace("." , "," ,$table['size']);
+                    echo " 
+                    <h3>".$table['first_name']." " .$table['last_name']."</h3>"
+                    ;
+                     echo "
+                    <p>" .$table['age']. " ans, je mesure " .$table['size']. "m et je fais partie des " .$table['situation']. " de la promo Simplon. </   p> ";
+                 
+                } 
+                elseif (isset($_GET['loop'])) {
+                    echo "
+                    <h2> Boucle </h2>";
+                    echo "
+                    <p> ===> Lecture du tableau à l'aide d'une boucle foreach </p>";
+                    $i=0;
+                    foreach ($table as $key => $value) {
+                  
+                    echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et contient "' .$value. '"<br>'  ; 
+                     }
+                }
+                    elseif (isset($_GET['function'])) {
+                    echo "
+                    <h2> Fonction </h2>";
+                     echo "
+                    <p> ===> J'utilise ma fonction readTable() </p>";
+                    function readTable($table){
+                    $i=0;
+                    foreach ($table as $key => $value) {
+                  
+                    echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et     contient "' .$value. '"<br>'  ; 
+                    }
+                    }
+                    readTable($table);
+                 }
+            
+                   else{
+                    echo '<a href="/index.php?add" type="button" method="GET"class="btn btn-primary  ">Ajouter des données</a>';
+                
+                }
+                ?>
+            
 
 
-                <div class="form-chek pl-2 pt-3">
-                    <input type="radio" id="apprenant" name="choix" class="form-chek-input" checked="">
-                    <label for="apprenant" class="form-chek-label">Apprenant</label>
-                </div>
-
-                <div class="form-chek pl-2">
-                    <input type="radio" id="formateur" name="choix" class="form-chek-input" checked="">
-                    <label for="formateur" class="form-chek-label">Formateur</label>
-                </div>
-                <button type="button" class=" btn bg-primary  m-2 text-light ">Enregistrer les
-                    données</button>
-
-            </form>
-
-
+            </section>
+        </div>
     </div>
-    </section>
-
-
     <footer>
-        <?php include './includes/footer.inc.html' ?>
+
+    <?php 
+    include 'includes/footer.inc.html';
+
+    ?>
     </footer>
 </body>
-
-</html>
-
