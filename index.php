@@ -1,15 +1,17 @@
 
- <?php session_start(); ?>
+ <?php session_start();  // On demarre la session
+ ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <?php include 'includes/head.inc.html' ?>
-</head>
+    <?php include 'includes/head.inc.html'  // On inclue le head.inc.html
+    ?>  
 
 <body>
     <header>
-        <?php include 'includes/header.inc.html';?>
+        <?php include 'includes/header.inc.html'; // On inclue notre header
+        ?>
     </header>
     <div class="container">
         <div class="row">  
@@ -19,23 +21,23 @@
   
                     if(!empty($_SESSION['table'])){
                          $table = $_SESSION['table'];
-                        include 'includes/ul.inc.html'; 
+                        include 'includes/ul.inc.html';   // Si l'utilisateurs est enregistrer dans le tableau alors on affiche le ul
                     } 
                     else{} 
                 ?> 
             </nav>
  
-            <section class=" col-sm-9 my-2"> 
+            <section class=" col-sm-9 my-2 "> 
            
             
                 <?php 
-                    if(isset($_GET['add'])) {                   // Si la page contiens add inclure le formulaire 
+                    if(isset($_GET['add'])) {                   // Si la page contiens add alors on inclus le formulaire 
                     include 'includes/form.inc.html';  
                     } 
              
                 
                     
-                    elseif(isset($_POST['submit'])){        /* Si l'utilisateurs remplis est envoie le tableau afficher donnée sauvegarder et retour */
+                    elseif(isset($_POST['submit'])){        /* Si l'utilisateurs remplis est envoie le tableau afficher "donnée sauvegarder" et retour index.php */
                          $_SESSION['table']=[
                         'first_name'=>htmlspecialchars($_POST['first_name']),
                         'last_name'=>htmlspecialchars($_POST['last_name']),
@@ -98,10 +100,11 @@
                         <h2> Boucle </h2>";
                         echo "
                         <p> ===> Lecture du tableau à l'aide d'une boucle foreach </p>"; 
-                        $i=0;
-                        foreach ($table as $key => $value) {
+                        $i=0;                       // je declare le i pour la lecture des ligne du tableau par la boucle
+                        foreach ($table as $key => $value) { // je demande a la boucle de lire les clé et valeurs dans le tableau 
                   
-                        echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et contient "' .$value. '"<br>'  ; 
+                        echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et contient "' .$value. '"<br>'  ;   /* je demande que i retourne et augmente de +1 à chaque cle et 
+                        valeurs de mon tableau jusque ce qu'elle est fait le tour */
                         }
                     }
 
@@ -134,7 +137,7 @@
     <footer>
 
     <?php 
-        include 'includes/footer.inc.html';
+        include 'includes/footer.inc.html'; // J'inclus mon footer 
 
     ?>
     </footer>
