@@ -28,15 +28,14 @@
             <section class=" col-sm-9 my-2"> 
            
             
-                <?php /* si la page contiens add inclure le formulaire */
-                    if(isset($_GET['add'])) {
+                <?php 
+                    if(isset($_GET['add'])) {                   // Si la page contiens add inclure le formulaire 
                     include 'includes/form.inc.html';  
-                } 
+                    } 
              
                 
                     
-                    elseif(isset($_POST['submit'])){  
-              
+                    elseif(isset($_POST['submit'])){        /* Si l'utilisateurs remplis est envoie le tableau afficher donnée sauvegarder et retour */
                          $_SESSION['table']=[
                         'first_name'=>htmlspecialchars($_POST['first_name']),
                         'last_name'=>htmlspecialchars($_POST['last_name']),
@@ -45,27 +44,25 @@
                         'situation'=>$_POST['situation']
                         ];
                         echo "<h2 class='text-center'>Donnée sauvegardée</h2>";
-               
                     } 
-                    //  Supression des données de la table
+                    
 
-                    elseif(isset($_GET['del'])){
-                        unset($_SESSION['table']);
+                    elseif(isset($_GET['del'])){                    //  Supression des données de la table
+                        unset($_SESSION['table']);                              
                         echo "<h2 class = 'text-center'>Les données ont bien été supprimées";
                     }
 
-                    // Lire un tableau avec print_r
-
-                    elseif(isset($_GET['debugging'])){
+                   
+                    elseif(isset($_GET['debugging'])){          // Lire un tableau avec print_r
                         echo "<h2>Débogage</h2> <br> <p> ===> Lecture du tableau à l'aide de la fonction print_r()";
                         print "<pre>";
                         print_r($table);
                         print "</pre>"; 
                     }
 
-                    // Concaténation
+                   
 
-                    elseif (isset($_GET['concatenation'])) {
+                    elseif (isset($_GET['concatenation'])) { // Concaténation
                         echo "<h2>Concaténation</h2> <br> <p> ===> Construction d'une phrase avec le contenu du tableau </p>";
                 
                         echo "
@@ -105,7 +102,7 @@
                         foreach ($table as $key => $value) {
                   
                         echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et contient "' .$value. '"<br>'  ; 
-                    }
+                        }
                     }
 
                     elseif (isset($_GET['function'])) { // La fonction
@@ -114,19 +111,19 @@
                         echo "
                         <p> ===> J'utilise ma fonction readTable() </p>";
                         function readTable($table){ // Je crée ma fonction qui englobera ma boucle
-                        $i=0;
-                        foreach ($table as $key => $value) {
+                            $i=0;
+                            foreach ($table as $key => $value) {
                   
-                        echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et     contient "' .$value. '"<br>'  ; 
+                             echo  'à la ligne n° ' .$i++. ' correspond la clé "' .$key. '" et     contient "' .$value. '"<br>'  ; 
+                            }
+                        }
+                         readTable($table); // je lance ma fonction 
                     }
-                    }
-                    readTable($table); // je lance ma fonction 
-                }
             
                    else{
-                    echo '<a href="/index.php?add" type="button" method="GET"class="btn btn-primary  ">Ajouter des données</a>'; // sinon j'affiche le btn ajouter des données
+                        echo '<a href="/index.php?add" type="button" method="GET"class="btn btn-primary  ">Ajouter des données</a>'; // sinon j'affiche le btn ajouter des données
                 
-                }
+                     }
                 ?>
             
 
@@ -137,7 +134,7 @@
     <footer>
 
     <?php 
-    include 'includes/footer.inc.html';
+        include 'includes/footer.inc.html';
 
     ?>
     </footer>
