@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">  
             <nav class="col-sm-3 my-2 "> 
-                <a href="index.php" class="btn btn-outline-secondary mx-auto btn-block col-12 "> Home</a>
+                <a href="./index.php" class="btn btn-outline-secondary mx-auto btn-block col-12 "> Home</a>
                 <?php
   
                     if(!empty($_SESSION['table'])){
@@ -124,7 +124,7 @@
                     }
             
                    else{
-                        echo '<a href="/index.php?add" type="button" method="GET"class="btn btn-primary  ">Ajouter des données</a>'; // sinon j'affiche le btn ajouter des données
+                        echo '<a href="./index.php?add" type="button" method="GET"class="btn btn-primary  ">Ajouter des données</a>'; // sinon j'affiche le btn ajouter des données
                 
                      }
                 ?>
